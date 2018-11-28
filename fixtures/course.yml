@@ -1,0 +1,8 @@
+App\Entity\Course:
+    course_{1..10}:
+        name: <sentence(4)>
+        isPublished: <boolean()>
+        createdAt:  <dateTimeBetween('-10 days', '-5 days')>
+        updatedAt:  <dateTimeBetween('-5 days', '-1 days')>
+        category: '@category*'
+        language: '@language*'

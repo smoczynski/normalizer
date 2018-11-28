@@ -1,0 +1,9 @@
+App\Entity\User:
+    user_{1..1000}:
+        firstName: <firstName()>
+        lastName: <lastName()>
+        birthDate: <dateTimeBetween('-30 years', '-20 years')>
+        city: <city()>
+        streetName: <streetName()>
+        language: '@language*'
+        course: '@course*'

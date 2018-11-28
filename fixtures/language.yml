@@ -1,0 +1,10 @@
+App\Entity\Language:
+    language_1:
+        name: English
+        code: en
+    language_2:
+        name: Polish
+        code: pl
+    language_3:
+        name: German
+        code: de
