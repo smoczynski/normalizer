@@ -1,4 +1,4 @@
-#Demo App based on Symfony 4 
+# Demo App based on Symfony 4 
 
 Application presents custom normalization mechanism as an alternative to bundles like JMS Serializer.
 
