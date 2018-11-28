@@ -89,5 +89,4 @@ class NormalizerFactory
 
         return null;
     }
-
 }

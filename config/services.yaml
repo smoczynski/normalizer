@@ -1,23 +1,10 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-    app.normalizer.user:
-        class: App\Normalizer\UserNormalizer
-
-    app.normalizer.course:
-        class: App\Normalizer\CourseNormalizer
-
-    app.normalizer.category:
-        class: App\Normalizer\CategoryNormalizer
-
-    app.normalizer.language:
-        class: App\Normalizer\LanguageNormalizer
-
-    app.normalizer.factory:
-        class: App\Normalizer\Base\NormalizerFactory
-        public: true
-        arguments:
-            - '@app.normalizer.user'
-            - '@app.normalizer.category'
-            - '@app.normalizer.course'
-            - '@app.normalizer.language'
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations}'
 
