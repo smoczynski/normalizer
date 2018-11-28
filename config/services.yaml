@@ -8,3 +8,5 @@ services:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations}'
 
+    App\Normalizer\Base\NormalizerFactory:
+        arguments: [!tagged app.normalizer]

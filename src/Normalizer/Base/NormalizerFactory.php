@@ -3,10 +3,6 @@
 namespace App\Normalizer\Base;
 
 use App\Exception\NotNormalizableValueException;
-use App\Normalizer\CategoryNormalizer;
-use App\Normalizer\CourseNormalizer;
-use App\Normalizer\LanguageNormalizer;
-use App\Normalizer\UserNormalizer;
 
 class NormalizerFactory
 {
@@ -17,22 +13,11 @@ class NormalizerFactory
 
     /**
      * NormalizerFactory constructor.
-     * @param UserNormalizer $userNormalizer
-     * @param CategoryNormalizer $categoryNormalizer
-     * @param CourseNormalizer $courseNormalizer
-     * @param LanguageNormalizer $languageNormalizer
+     * @param iterable $normalizers
      */
-    public function __construct(
-        UserNormalizer $userNormalizer,
-        CategoryNormalizer $categoryNormalizer,
-        CourseNormalizer $courseNormalizer,
-        LanguageNormalizer $languageNormalizer
-    )
+    public function __construct(iterable $normalizers)
     {
-        $this->normalizers[] = $userNormalizer;
-        $this->normalizers[] = $categoryNormalizer;
-        $this->normalizers[] = $courseNormalizer;
-        $this->normalizers[] = $languageNormalizer;
+        $this->normalizers = $normalizers;
     }
 
     /**
