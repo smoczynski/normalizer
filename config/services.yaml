@@ -1,23 +1,14 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $projectDir: '%kernel.project_dir%'
 
-    app.normalizer.user:
-        class: App\Normalizer\UserNormalizer
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations}'
 
-    app.normalizer.course:
-        class: App\Normalizer\CourseNormalizer
-
-    app.normalizer.category:
-        class: App\Normalizer\CategoryNormalizer
-
-    app.normalizer.language:
-        class: App\Normalizer\LanguageNormalizer
-
-    app.normalizer.factory:
-        class: App\Normalizer\Base\NormalizerFactory
-        public: true
-        arguments:
-            - '@app.normalizer.user'
-            - '@app.normalizer.category'
-            - '@app.normalizer.course'
-            - '@app.normalizer.language'
-
+    App\Normalizer\Base\NormalizerFactory:
+        $normalizers: !tagged app.normalizer

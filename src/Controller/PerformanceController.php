@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Normalizer\Base\NormalizerFactory;
+use App\Repository\UserRepository;
 use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,18 +20,18 @@ class PerformanceController extends Controller
     /**
      * @Route("/users", name="performance_user_list")
      *
+     * @param NormalizerFactory $normalizer
+     * @param UserRepository $userRepository
+     * @param SerializerInterface $jms
      * @return JsonResponse
      */
-    public function getUserListAction(): Response
+    public function getUserListAction(NormalizerFactory $normalizer, UserRepository $userRepository, SerializerInterface $jms): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $normalizer = $this->get('app.normalizer.factory');
-        $jms = $this->get('jms_serializer');
-        $users = $em->getRepository(User::class)->findAll();
+        $users = $userRepository->findAll();
 
         // time without JMS
         $start = microtime(true);
-        $response = new JsonResponse($normalizer->normalize($users));
+        $response = json_encode($normalizer->normalize($users));
         $end = microtime(true);
         $diff = round($end - $start, 5);
 
@@ -45,13 +48,12 @@ class PerformanceController extends Controller
      * @Route("/users/{id}", name="performance_user")
      *
      * @param User $user
+     * @param NormalizerFactory $normalizer
+     * @param SerializerInterface $jms
      * @return JsonResponse
      */
-    public function getUserAction(User $user): Response
+    public function getUserAction(User $user, NormalizerFactory $normalizer, SerializerInterface $jms): Response
     {
-        $normalizer = $this->get('app.normalizer.factory');
-        $jms = $this->get('jms_serializer');
-
         // time without JMS
         $start = microtime(true);
         $response = json_encode($normalizer->normalize($user));
