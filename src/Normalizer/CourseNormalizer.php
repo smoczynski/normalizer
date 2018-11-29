@@ -9,6 +9,20 @@ use App\Normalizer\Base\NormalizerInterface;
 class CourseNormalizer implements NormalizerInterface
 {
     /**
+     * @var string
+     */
+    private  $projectDir;
+
+    /**
+     * CategoryNormalizer constructor.
+     * @param string $projectDir
+     */
+    public function __construct(string $projectDir)
+    {
+        $this->projectDir = $projectDir;
+    }
+
+    /**
      * @param Course $entity
      * @return array
      */
@@ -21,6 +35,7 @@ class CourseNormalizer implements NormalizerInterface
             'updatedAt' => $entity->getUpdatedAt() ? $entity->getUpdatedAt()->format('Y-m-d') : '-',
             'category' => $entity->getCategory(),
             'language' => $entity->getLanguage()->getCode(),
+            'path' => $this->projectDir . "/some-path"
         ];
     }
 

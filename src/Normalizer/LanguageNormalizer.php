@@ -9,6 +9,20 @@ use App\Normalizer\Base\NormalizerInterface;
 class LanguageNormalizer implements NormalizerInterface
 {
     /**
+     * @var string
+     */
+    private  $projectDir;
+
+    /**
+     * CategoryNormalizer constructor.
+     * @param string $projectDir
+     */
+    public function __construct(string $projectDir)
+    {
+        $this->projectDir = $projectDir;
+    }
+
+    /**
      * @param Language $entity
      * @return array
      */
@@ -17,6 +31,7 @@ class LanguageNormalizer implements NormalizerInterface
         return [
             'name' => $entity->getName(),
             'code' => $entity->getCode(),
+            'path' => $this->projectDir . "/some-path",
         ];
     }
 
