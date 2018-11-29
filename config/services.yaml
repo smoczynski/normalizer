@@ -3,22 +3,12 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $projectDir: '%kernel.project_dir%'
 
     App\:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations}'
 
-    App\Normalizer\CategoryNormalizer:
-        arguments: ['%kernel.project_dir%']
-
-    App\Normalizer\CourseNormalizer:
-        arguments: ['%kernel.project_dir%']
-
-    App\Normalizer\LanguageNormalizer:
-        arguments: ['%kernel.project_dir%']
-
-    App\Normalizer\UserNormalizer:
-        arguments: ['%kernel.project_dir%']
-
     App\Normalizer\Base\NormalizerFactory:
-        arguments: [!tagged app.normalizer]
+        $normalizers: !tagged app.normalizer
