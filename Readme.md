@@ -40,4 +40,14 @@ Also you can check performance tests at:
 
 Bonus
 ---
-On git branches `step-1`, `step-2`, `step-3`, `step-4` you can check process of code refactor from old style of services definition through Symfony 3.3 and 3.4 features until newest way of defining symfony services.
+On git branches `step-1`, `step-2`, `step-3`, `step-4`, `step-5` you can check process of code refactor from old style of services definition to Symfony 3.3 and 3.4 features.
+
+`step-1` - oldest way do define services in Symfony 
+
+`step-2` - Symfony 3.3 - autowire, autoconfigure, public false
+
+`step-3` - Symfony 3.4 - tagged option
+
+`step-4` - old way string parameter passing to services 
+
+`step-5` - bind option
