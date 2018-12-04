@@ -31,17 +31,23 @@ class PerformanceController extends Controller
 
         // time without JMS
         $start = microtime(true);
+        $memoryStart = memory_get_usage();
         $response = json_encode($normalizer->normalize($users));
+        $memoryEnd = memory_get_usage();
         $end = microtime(true);
-        $diff = round($end - $start, 5);
+        $diff = round($end - $start, 4);
+        $memoryDiff = round(($memoryEnd - $memoryStart)/1000000, 2);
 
         // time with JMS and max depth
         $startJms = microtime(true);
+        $memoryJmsStart = memory_get_usage();
         $jmsResponse = $jms->serialize($users, 'json', SerializationContext::create()->enableMaxDepthChecks());
+        $memoryJmsEnd = memory_get_usage();
         $endJms = microtime(true);
-        $diffJms = round($endJms - $startJms, 5);
+        $diffJms = round($endJms - $startJms, 4);
+        $memoryJmsDiff = round(($memoryJmsEnd - $memoryJmsStart)/1000000, 2);
 
-        return new Response(sprintf($this->getOutputTemplate(), count($users), $diff, $diffJms));
+        return new Response(sprintf($this->getOutputTemplate(), count($users), $diff, $memoryDiff, $diffJms, $memoryJmsDiff));
     }
 
     /**
@@ -56,17 +62,23 @@ class PerformanceController extends Controller
     {
         // time without JMS
         $start = microtime(true);
+        $memoryStart = memory_get_usage();
         $response = json_encode($normalizer->normalize($user));
+        $memoryEnd = memory_get_usage();
         $end = microtime(true);
-        $diff = round($end - $start, 5);
+        $diff = round($end - $start, 4);
+        $memoryDiff = round(($memoryEnd - $memoryStart)/1000000, 2);
 
         // time with JMS and max depth
         $startJms = microtime(true);
+        $memoryJmsStart = memory_get_usage();
         $jmsResponse = $jms->serialize($user, 'json', SerializationContext::create()->enableMaxDepthChecks());
+        $memoryJmsEnd = memory_get_usage();
         $endJms = microtime(true);
-        $diffJms = round($endJms - $startJms, 5);
+        $diffJms = round($endJms - $startJms, 4);
+        $memoryJmsDiff = round(($memoryJmsEnd - $memoryJmsStart)/1000000, 2);
 
-        return new Response(sprintf($this->getOutputTemplate(), 1, $diff, $diffJms));
+        return new Response(sprintf($this->getOutputTemplate(), 1, $diff, $memoryDiff, $diffJms, $memoryJmsDiff));
     }
 
     /**
@@ -74,9 +86,16 @@ class PerformanceController extends Controller
      */
     private function getOutputTemplate(): string
     {
-        return "<style>td {padding: 30px;} table {background: #DAFFE1; border: 1px solid black; 
-                padding: 30px; margin: 50px; font-size: 30px;}</style>
-                <table><tr><td colspan='2'>Porównanie wydajności<BR>Ilość obiektów: %s</td></tr><tr><td>Bez JMS</td><td>%s</td></tr>
-                <tr><td>Z JMS (max depth)</td><td>%s</td></tr></table>";
+        return "<style>
+                td {padding: 30px; text-align: right;} 
+                table {background: #98b4cc; border: 1px solid black; padding: 30px; margin: 50px; font-size: 30px;}
+                .title { text-align: left;}
+                </style>
+                <table>
+                <tr><td colspan='3' class='title'><b>Porównanie wydajności</b><BR>Ilość obiektów: %s</td></tr>
+                <tr><td></td><td>Czas</td><td>Pamięć</td></tr>
+                <tr><td>Bez JMS</td><td>%s s</td><td>%s MB</td></tr>
+                <tr><td>Z JMS (max depth)</td><td>%s s</td><td>%s MB</td></tr>
+                </table>";
     }
 }
