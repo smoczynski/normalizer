@@ -12,7 +12,7 @@ Installation:
 2. fill own database credentials in .env file
 3. bin/console doctrine:database:create 
 4. bin/console doctrine:schema:update -f
-5. bin/console hautelook:fixtures: load
+5. bin/console hautelook:fixtures:load
 6. bin/console server:run
 ```
 
