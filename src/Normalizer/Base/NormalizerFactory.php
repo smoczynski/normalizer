@@ -81,6 +81,10 @@ class NormalizerFactory
      */
     private function getNormalizer($data): ?NormalizerInterface
     {
+        if (!is_object($data)) {
+            return null;
+        }
+
         foreach ($this->normalizers as $normalizer) {
             if ($normalizer->supports($data)) {
                 return $normalizer;
